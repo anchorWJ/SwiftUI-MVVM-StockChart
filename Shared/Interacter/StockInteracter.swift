@@ -4,5 +4,8 @@
 //
 //  Created by w simple on 2021/07/13.
 //
+import SwiftUI
 
-import Foundation
+class StockInteracter {
+   
+}

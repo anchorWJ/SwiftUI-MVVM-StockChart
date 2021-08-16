@@ -1,0 +1,6 @@
+framework module Pods_USStockNews__macOS_ {
+  umbrella header "Pods-USStockNews (macOS)-umbrella.h"
+
+  export *
+  module * { export * }
+}

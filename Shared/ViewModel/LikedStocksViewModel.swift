@@ -5,16 +5,55 @@
 //  Created by w simple on 2021/04/04.
 //
 
-import SwiftUI
+import Foundation
 
-struct LikedStocksViewModel: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+enum ImageError: Error {
+    case ImageError
 }
 
-struct LikedStocksViewModel_Previews: PreviewProvider {
-    static var previews: some View {
-        LikedStocksViewModel()
+class LikedStocksViewModel: ObservableObject {
+    
+    @Published var companyInfo: [Company.CompanyInfo]
+    @Published var logo: [Company.Logo]
+
+    public init() {
+        self.companyInfo = []
+        self.logo = []
+    }
+
+    func fetchCompany(symbol: String) {
+        NewsDataService().getCompany(symbol: symbol) { result in
+            switch result {
+            case .success(let companyInfo):
+                DispatchQueue.main.async {
+                    if let unwrappedCompanyInfo = companyInfo {
+                        self.companyInfo.append(Company.CompanyInfo(symbol: unwrappedCompanyInfo.symbol, sector: unwrappedCompanyInfo.sector, exchange: unwrappedCompanyInfo.exchange))
+                    }
+                    print(self.companyInfo[0].exchange)
+                }
+            case .failure(_ ):
+                print("error")
+            }
+        }
+    }
+    
+    func fetchCompanyLogo(symbol: String) {
+        NewsDataService().getCompanyLogo(symbol: symbol) { result in
+            switch result {
+            case .success(let logo):
+                DispatchQueue.main.async {
+                    if let unwrappedLogo = logo {
+                        self.logo.append(Company.Logo(logoUrl: unwrappedLogo.logoUrl))
+                    }
+                }
+            case .failure(_ ):
+                print("error")
+            }
+        }
+    }
+    
+    func fetchAll(symbol: String) {
+        self.fetchCompany(symbol: symbol)
+        self.fetchCompanyLogo(symbol: symbol)
     }
 }
