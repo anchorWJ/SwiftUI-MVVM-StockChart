@@ -16,10 +16,14 @@ struct MainView: View {
                 columns: Array(repeating: .init(.flexible(), spacing: 16), count: 2),
                 spacing: 16
             ) {
+               
+                ForEach(self.stockVM.logo, id: \.self) { logo in
+                    CardImageView(companyInfo: logo)
+                }
                 ForEach(self.stockVM.companyInfo, id: \.self) { item in
                     CardView(companyInfo: item)
                 }
-               
+              
             }
             
         }.onAppear(perform: fetch)

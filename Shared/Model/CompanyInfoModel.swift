@@ -34,12 +34,12 @@ struct Company: Identifiable, Decodable, Hashable {
     }
     
     struct Logo: Decodable, Hashable {
-        var logoUrl: String
+        var url: String
         
         init(
-            logoUrl: String
+            url: String
         ) {
-            self.logoUrl = logoUrl
+            self.url = url
         }
     }
     

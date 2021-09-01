@@ -43,7 +43,8 @@ class LikedStocksViewModel: ObservableObject {
             case .success(let logo):
                 DispatchQueue.main.async {
                     if let unwrappedLogo = logo {
-                        self.logo.append(Company.Logo(logoUrl: unwrappedLogo.logoUrl))
+                        self.logo.append(Company.Logo(url: unwrappedLogo.url))
+                        print(unwrappedLogo.url)
                     }
                 }
             case .failure(_ ):
